@@ -1,3 +1,6 @@
+"use client";
+
+import { LoginLink } from "@kinde-oss/kinde-auth-nextjs";
 import { MoveRight } from "lucide-react";
 import Image from "next/image";
 
@@ -61,12 +64,9 @@ const Header = () => {
 
           <div className="flex items-center gap-4">
             <div className="sm:flex sm:gap-4">
-              <a
-                className="block text-sm font-medium text-white px-5 py-2.5 transition hover:text-gray-300"
-                href="#"
-              >
-                Login
-              </a>
+              <div className="block text-sm font-medium text-white px-5 py-2.5 transition hover:text-gray-300">
+                <LoginLink>Login</LoginLink>
+              </div>
 
               <a
                 className="hidden rounded-md bg-white text-black px-6 py-2.5 text-sm font-medium transition  sm:block hover:bg-gray-300 md:flex items-center justify-center gap-1"
