@@ -2,12 +2,15 @@
 
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
 import React from "react";
+import { Button } from "@/components/ui/button";
 
 const DashboardPage = () => {
   return (
     <div>
       DashboardPage <br />
-      <LogoutLink>Logout</LogoutLink>
+      <LogoutLink>
+        <Button>Logout</Button>
+      </LogoutLink>
     </div>
   );
 };
