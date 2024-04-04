@@ -1,10 +1,43 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Users } from "lucide-react";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import axios from "axios";
+import { LoaderCircle, Users } from "lucide-react";
 import Image from "next/image";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { toast } from "sonner";
 
 const CreateTeam = () => {
+  const [teamName, setTeamName] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const { user } = useKindeBrowserClient();
+
+  const router = useRouter();
+
+  async function createTeam() {
+    try {
+      setLoading(true);
+      const res = await axios.post("/api/team/create", {
+        teamName,
+        createdBy: user?.email,
+      });
+
+      if (res.data.success) {
+        router.push("/dashboard");
+        toast.success(res.data.msg);
+      } else {
+        toast.error(res.data.msg);
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="bg-black/95 min-h-screen p-4 text-white">
       <Image
@@ -32,12 +65,18 @@ const CreateTeam = () => {
           <h3 className="text-gray-300 mb-1 text-sm font-medium">Team Name</h3>
           <Input
             placeholder="Team name"
+            value={teamName}
+            onChange={(e) => setTeamName(e.target.value)}
             className="bg-neutral-800 border-neutral-600 w-full h-12"
           />
         </div>
 
-        <Button className="w-72 bg-blue-600 hover:bg-blue-700 mt-20 h-12 text-sm">
-          Create
+        <Button
+          disabled={teamName.length < 1}
+          onClick={createTeam}
+          className="w-72 bg-blue-600 hover:bg-blue-700 mt-20 h-12 text-sm"
+        >
+          {loading ? <LoaderCircle className="animate-spin" /> : "Create"}
         </Button>
       </div>
     </div>

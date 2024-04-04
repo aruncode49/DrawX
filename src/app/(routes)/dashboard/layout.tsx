@@ -15,7 +15,7 @@ const DashboardLayout = ({
 
   async function getTeam() {
     try {
-      const res = await axios.post("/api/team/get", { email: user?.email });
+      const res = await axios.post("/api/team/get", { createdBy: user?.email });
       if (!res.data.success) {
         router.push("/team/create");
       }
