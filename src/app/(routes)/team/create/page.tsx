@@ -39,7 +39,7 @@ const CreateTeam = () => {
   }
 
   return (
-    <div className="bg-black/95 min-h-screen p-4 text-white">
+    <div className="bg-black/90 min-h-screen p-4 text-white">
       <Image
         src={"/logo-black.svg"}
         alt="eraser-logo"

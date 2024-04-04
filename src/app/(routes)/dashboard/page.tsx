@@ -35,10 +35,7 @@ const DashboardPage = () => {
 
   return (
     <div>
-      DashboardPage <br />
-      <LogoutLink>
-        <Button>Logout</Button>
-      </LogoutLink>
+      <h1>Hello Dashboard</h1>
     </div>
   );
 };

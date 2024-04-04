@@ -3,7 +3,7 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <section className="bg-black/95 min-h-[calc(100vh-96px)]">
+    <section className="bg-black/90 min-h-[calc(100vh-96px)]">
       <div className="mx-auto max-w-screen-xl px-4 py-24">
         <div className="mx-auto max-w-xl text-center">
           <h2 className="text-white  flex  items-center bg-gray-700 text-sm w-fit mx-auto px-4 py-2.5 rounded-full border border-sky-800 mb-10">

@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const Header = () => {
   return (
-    <header className="bg-black">
+    <header className="bg-black/90">
       <div className="mx-auto flex h-24 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
         <a className="block text-teal-600" href="#">
           <Image src={"/logo-black.svg"} width={100} height={50} alt="logo" />

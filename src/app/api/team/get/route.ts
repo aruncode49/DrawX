@@ -6,19 +6,19 @@ export async function POST(req: NextRequest) {
   try {
     await connectDB();
     const { createdBy } = await req.json();
-    const team = await Team.findOne({ createdBy });
+    const team = await Team.find({ createdBy });
 
-    if (!team) {
+    if (team && team.length) {
       return NextResponse.json({
-        success: false,
-        msg: "Team not found!",
+        success: true,
+        msg: "Team found successfully",
+        team,
       });
     }
 
     return NextResponse.json({
-      success: true,
-      msg: "Team found successfully",
-      team,
+      success: false,
+      msg: "Team not found!",
     });
   } catch (error: any) {
     console.log(error.message);
