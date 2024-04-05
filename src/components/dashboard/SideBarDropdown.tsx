@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, LogOut, Settings, Users } from "lucide-react";
+import { ChevronDown, LayoutGrid, LogOut, Settings, Users } from "lucide-react";
 
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -19,6 +19,7 @@ import {
 import axios from "axios";
 
 import TeamNameShimmer from "../skeleton/TeamNameShimmer";
+import { Button } from "../ui/button";
 
 // ************ code starts from here ************
 
@@ -70,10 +71,10 @@ const SideBarDropdown = () => {
       <TeamNameShimmer />
     </div>
   ) : (
-    <div className="flex justify-center">
+    <div className="flex justify-center flex-col">
       <Popover>
         <PopoverTrigger>
-          <div className="flex items-center gap-1 cursor-pointer hover:bg-zinc-700 px-3 py-2 rounded-lg duration-200 ">
+          <div className="flex items-center gap-1 cursor-pointer hover:bg-zinc-700 px-3 py-2 rounded-lg duration-200 w-fit">
             <Image
               className="mr-1"
               src={"/logo.png"}
@@ -87,7 +88,7 @@ const SideBarDropdown = () => {
             <ChevronDown size={18} />
           </div>
         </PopoverTrigger>
-        <PopoverContent className="bg-zinc-900 text-white border-zinc-600 text-sm w-52 p-2">
+        <PopoverContent className="bg-zinc-900 text-white border-zinc-600 text-sm w-52 p-2 mt-2">
           {/* team names */}
           <div className="flex flex-col w-full border-b border-zinc-700 pb-2 gap-[3px]">
             {team &&
@@ -98,7 +99,7 @@ const SideBarDropdown = () => {
                   onClick={() => setActiveTeam(t)}
                   className={`hover:bg-zinc-700 cursor-pointer p-1 px-2 rounded-sm ${
                     activeTeam._id == t._id
-                      ? "bg-blue-500 hover:bg-blue-500"
+                      ? "bg-blue-600 hover:bg-blue-600"
                       : ""
                   }`}
                 >
@@ -148,6 +149,12 @@ const SideBarDropdown = () => {
           )}
         </PopoverContent>
       </Popover>
+
+      {/* All Files Button */}
+      <Button className="flex items-center justify-start mt-8 bg-zinc-800 gap-2 hover:bg-zinc-800 border border-zinc-500 font-medium">
+        <LayoutGrid size={14} />
+        All Files
+      </Button>
     </div>
   );
 };

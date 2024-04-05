@@ -32,10 +32,10 @@ const DashboardLayout = ({
 
   return (
     <div className="bg-black/90 min-h-screen text-white flex">
-      <div className="w-64 border-r border-r-zinc-700 h-screen fixed">
+      <div className="w-[280px] border-r border-r-zinc-700 h-screen fixed">
         <SideBar />
       </div>
-      <div className="ml-64">{children}</div>
+      <div className="ml-[280px]">{children}</div>
     </div>
   );
 };
