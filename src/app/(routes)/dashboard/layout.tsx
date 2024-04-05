@@ -3,7 +3,7 @@
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SideBar from "@/components/dashboard/SideBar";
 
 const DashboardLayout = ({
@@ -22,6 +22,7 @@ const DashboardLayout = ({
       }
     } catch (error: any) {
       console.log(error.message);
+    } finally {
     }
   }
 

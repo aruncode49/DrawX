@@ -18,6 +18,10 @@ import {
 } from "@kinde-oss/kinde-auth-nextjs";
 import axios from "axios";
 
+import TeamNameShimmer from "../skeleton/TeamNameShimmer";
+
+// ************ code starts from here ************
+
 const links = [
   {
     id: 1,
@@ -42,27 +46,30 @@ interface TEAM {
 const SideBarDropdown = () => {
   const { user } = useKindeBrowserClient();
   const [team, setTeam] = useState<TEAM[]>([]);
+  const [activeTeam, setActiveTeam] = useState<TEAM>(team[0]);
 
   async function getTeams() {
     try {
       const res = await axios.post("/api/team/get", { createdBy: user?.email });
       if (res?.data?.success) {
         setTeam(res?.data?.team);
+        setActiveTeam(res?.data?.team[0]);
       }
     } catch (error: any) {
       console.log(error.message);
+    } finally {
     }
-  }
-
-  if (team && team.length) {
-    console.log(team);
   }
 
   useEffect(() => {
     user && getTeams();
   }, [user]);
 
-  return (
+  return !activeTeam ? (
+    <div className="flex justify-center mt-3">
+      <TeamNameShimmer />
+    </div>
+  ) : (
     <div className="flex justify-center">
       <Popover>
         <PopoverTrigger>
@@ -74,19 +81,26 @@ const SideBarDropdown = () => {
               width={30}
               height={30}
             />
-            <span className="font-bold ">Team Name</span>
+            <span className="font-bold ">
+              {activeTeam && activeTeam.teamName}
+            </span>
             <ChevronDown size={18} />
           </div>
         </PopoverTrigger>
         <PopoverContent className="bg-zinc-900 text-white border-zinc-600 text-sm w-52 p-2">
           {/* team names */}
-          <div className="flex flex-col w-full border-b border-zinc-700 pb-2">
+          <div className="flex flex-col w-full border-b border-zinc-700 pb-2 gap-[3px]">
             {team &&
               team.length &&
               team.map((t) => (
                 <p
                   key={t?._id}
-                  className="hover:bg-zinc-700 cursor-pointer p-1 px-2 rounded-sm"
+                  onClick={() => setActiveTeam(t)}
+                  className={`hover:bg-zinc-700 cursor-pointer p-1 px-2 rounded-sm ${
+                    activeTeam._id == t._id
+                      ? "bg-blue-500 hover:bg-blue-500"
+                      : ""
+                  }`}
                 >
                   {t?.teamName}
                 </p>
