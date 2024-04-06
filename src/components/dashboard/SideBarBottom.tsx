@@ -1,8 +1,18 @@
-import { link } from "fs";
 import { ChevronDown, Flag, Github, Trash } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../ui/button";
+
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 
 const links = [
   {
@@ -26,6 +36,12 @@ const links = [
 ];
 
 const SideBarBottom = () => {
+  const [fileName, setFileName] = useState<string>("");
+
+  async function handleFileSave() {
+    console.log(fileName);
+  }
+
   return (
     <div>
       {/* links */}
@@ -43,10 +59,41 @@ const SideBarBottom = () => {
 
       {/* new file button */}
       <div>
-        <Button className="bg-blue-600 hover:bg-blue-700 w-full mt-5 flex items-center justify-between font-medium">
-          New File
-          <ChevronDown size={14} />
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="bg-blue-600 hover:bg-blue-700 w-full mt-5 flex items-center justify-between font-medium">
+              New File
+              <ChevronDown size={14} />
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-md bg-zinc-900 border-zinc-600">
+            <DialogHeader>
+              <DialogTitle className="text-white">Create New File</DialogTitle>
+            </DialogHeader>
+            <div className="flex items-center space-x-2">
+              <div className="grid flex-1 gap-2">
+                <Input
+                  className="text-white bg-zinc-800 border-zinc-600 placeholder:text-zinc-400"
+                  placeholder="Enter file name"
+                  value={fileName}
+                  onChange={(e) => setFileName(e.target.value)}
+                />
+              </div>
+            </div>
+            <DialogFooter className="sm:justify-end">
+              <DialogClose asChild>
+                <Button
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                  type="button"
+                  variant="secondary"
+                  onClick={handleFileSave}
+                >
+                  Create
+                </Button>
+              </DialogClose>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
 
       {/* file remaining progress bar */}
