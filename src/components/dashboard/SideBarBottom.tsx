@@ -35,13 +35,17 @@ const links = [
   },
 ];
 
-const SideBarBottom = () => {
-  const [fileName, setFileName] = useState<string>("");
+interface PROPS {
+  handleCreateNewFile: any;
+  fileName: string;
+  setFileName: React.Dispatch<React.SetStateAction<string>>;
+}
 
-  async function handleFileSave() {
-    console.log(fileName);
-  }
-
+const SideBarBottom = ({
+  handleCreateNewFile,
+  fileName,
+  setFileName,
+}: PROPS) => {
   return (
     <div>
       {/* links */}
@@ -86,7 +90,7 @@ const SideBarBottom = () => {
                   className="bg-blue-600 hover:bg-blue-700 text-white"
                   type="button"
                   variant="secondary"
-                  onClick={handleFileSave}
+                  onClick={handleCreateNewFile}
                 >
                   Create
                 </Button>

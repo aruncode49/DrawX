@@ -20,6 +20,7 @@ import axios from "axios";
 
 import TeamNameShimmer from "../skeleton/TeamNameShimmer";
 import { Button } from "../ui/button";
+import { TEAM } from "@/lib/types";
 
 // ************ code starts from here ************
 
@@ -38,33 +39,14 @@ const links = [
   },
 ];
 
-interface TEAM {
-  teamName: string;
-  _id: string;
-  createdBy: string;
+interface PROPS {
+  team: TEAM[];
+  activeTeam: TEAM;
+  setActiveTeam: React.Dispatch<React.SetStateAction<TEAM>>;
 }
 
-const SideBarDropdown = () => {
+const SideBarDropdown = ({ team, activeTeam, setActiveTeam }: PROPS) => {
   const { user } = useKindeBrowserClient();
-  const [team, setTeam] = useState<TEAM[]>([]);
-  const [activeTeam, setActiveTeam] = useState<TEAM>(team[0]);
-
-  async function getTeams() {
-    try {
-      const res = await axios.post("/api/team/get", { createdBy: user?.email });
-      if (res?.data?.success) {
-        setTeam(res?.data?.team);
-        setActiveTeam(res?.data?.team[0]);
-      }
-    } catch (error: any) {
-      console.log(error.message);
-    } finally {
-    }
-  }
-
-  useEffect(() => {
-    user && getTeams();
-  }, [user]);
 
   return !activeTeam ? (
     <div className="flex justify-center mt-3">
@@ -97,11 +79,11 @@ const SideBarDropdown = () => {
                 <p
                   key={t?._id}
                   onClick={() => setActiveTeam(t)}
-                  className={`hover:bg-zinc-700 cursor-pointer p-1 px-2 rounded-sm ${
+                  className={`${
                     activeTeam._id == t._id
-                      ? "bg-blue-600 hover:bg-blue-600"
+                      ? "hover:bg-blue-600 bg-blue-600 "
                       : ""
-                  }`}
+                  } cursor-pointer p-1 px-2 rounded-sm`}
                 >
                   {t?.teamName}
                 </p>
