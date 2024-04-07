@@ -2,18 +2,62 @@ import React, { useEffect, useState } from "react";
 import SideBarDropdown from "./SideBarDropdown";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import SideBarBottom from "./SideBarBottom";
-import { TEAM } from "@/lib/types";
+import { TEAM, FILE } from "@/lib/types";
+import axios from "axios";
+import { toast } from "sonner";
 
 const SideBar = ({ team }: { team: TEAM[] }) => {
   const { user } = useKindeBrowserClient();
   const [fileName, setFileName] = useState<string>("");
-  const [testactiveTeam, setTestactiveTeam] = useState<TEAM>();
+  const [testactiveTeam] = useState<TEAM>();
   const [activeTeam, setActiveTeam] = useState<TEAM>(testactiveTeam!);
 
+  const [allFiles, setAllFiles] = useState<FILE[]>();
+  const [file, setFile] = useState<FILE>();
+
   async function handleCreateNewFile() {
-    console.log(fileName);
-    console.log(team);
+    try {
+      const res = await axios.post("/api/file/create", {
+        fileName,
+        teamId: activeTeam?._id,
+        createdBy: user?.email,
+      });
+
+      if (res?.data?.success) {
+        toast.success(res?.data?.msg);
+        setAllFiles(res?.data?.allFiles);
+      } else {
+        toast.error(res?.data?.msg);
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
   }
+
+  async function getAllFiles() {
+    try {
+      const res = await axios.post("/api/file/get", {
+        teamId: activeTeam?._id,
+        createdBy: user?.email,
+      });
+
+      if (res?.data?.success) {
+        setAllFiles(res?.data?.allFiles);
+      } else {
+        toast.error(res?.data?.msg);
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }
+
+  if (allFiles && allFiles.length > 0) {
+    console.log(allFiles);
+  }
+
+  useEffect(() => {
+    if (activeTeam) getAllFiles();
+  }, [activeTeam]);
 
   useEffect(() => {
     team && team.length && setActiveTeam(team[0]);

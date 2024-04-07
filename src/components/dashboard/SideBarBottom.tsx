@@ -90,7 +90,8 @@ const SideBarBottom = ({
                   className="bg-blue-600 hover:bg-blue-700 text-white"
                   type="button"
                   variant="secondary"
-                  onClick={handleCreateNewFile}
+                  disabled={fileName?.length < 3}
+                  onClick={() => handleCreateNewFile()}
                 >
                   Create
                 </Button>
