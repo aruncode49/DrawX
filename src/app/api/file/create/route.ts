@@ -5,7 +5,9 @@ import { File } from "@/models/file.model";
 export async function POST(req: NextRequest) {
   try {
     await connectDB();
-    const { teamId, fileName, createdBy } = await req.json();
+    const { teamId, fileName, createdBy, archive, document, whiteboard } =
+      await req.json();
+
     const files = await File.find({ teamId, createdBy });
 
     // if files are more than 4 in db
@@ -21,6 +23,9 @@ export async function POST(req: NextRequest) {
       fileName,
       teamId,
       createdBy,
+      archive,
+      document,
+      whiteboard,
     });
 
     if (createdFile) {

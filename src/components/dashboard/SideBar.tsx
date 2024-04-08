@@ -15,12 +15,18 @@ const SideBar = ({ team }: { team: TEAM[] }) => {
 
   const [allFiles, setAllFiles] = useState<FILE[]>();
 
+  let toastId: string | number;
+
   async function handleCreateNewFile() {
     try {
+      toastId = toast.loading("Creating File...");
       const res = await axios.post("/api/file/create", {
         fileName,
         teamId: activeTeam?._id,
         createdBy: user?.email,
+        archive: false,
+        document: "",
+        whiteboard: "",
       });
 
       if (res?.data?.success) {
@@ -31,6 +37,10 @@ const SideBar = ({ team }: { team: TEAM[] }) => {
       }
     } catch (error: any) {
       console.log(error.message);
+    } finally {
+      if (toastId) {
+        toast.dismiss(toastId);
+      }
     }
   }
 

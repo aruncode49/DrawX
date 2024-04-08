@@ -107,7 +107,9 @@ const SideBarBottom = ({
       {/* file remaining progress bar */}
       <div className="w-full relative h-4 bg-zinc-600 rounded-full mt-5">
         <div
-          className="absolute h-4 bg-blue-600 rounded-full"
+          className={`absolute h-4 bg-blue-600 rounded-full ${
+            allFiles && allFiles.length == 5 && "bg-red-600"
+          }`}
           style={{ width: `${(allFiles && allFiles.length * 100) / 5}%` }}
         ></div>
       </div>

@@ -14,6 +14,9 @@ const fileSchema = new mongoose.Schema(
       type: String, // email
       required: true,
     },
+    archive: Boolean,
+    document: String,
+    whiteboard: String,
   },
   { timestamps: true }
 );
