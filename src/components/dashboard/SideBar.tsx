@@ -5,6 +5,7 @@ import SideBarBottom from "./SideBarBottom";
 import { TEAM, FILE } from "@/lib/types";
 import axios from "axios";
 import { toast } from "sonner";
+import SideBarBottomShimmer from "../skeleton/SideBarBottomShimmer";
 
 const SideBar = ({ team }: { team: TEAM[] }) => {
   const { user } = useKindeBrowserClient();
@@ -13,7 +14,6 @@ const SideBar = ({ team }: { team: TEAM[] }) => {
   const [activeTeam, setActiveTeam] = useState<TEAM>(testactiveTeam!);
 
   const [allFiles, setAllFiles] = useState<FILE[]>();
-  const [file, setFile] = useState<FILE>();
 
   async function handleCreateNewFile() {
     try {
@@ -43,16 +43,13 @@ const SideBar = ({ team }: { team: TEAM[] }) => {
 
       if (res?.data?.success) {
         setAllFiles(res?.data?.allFiles);
+        console.log(res?.data?.allFiles);
       } else {
-        toast.error(res?.data?.msg);
+        setAllFiles(res?.data?.allFiles);
       }
     } catch (error: any) {
       console.log(error.message);
     }
-  }
-
-  if (allFiles && allFiles.length > 0) {
-    console.log(allFiles);
   }
 
   useEffect(() => {
@@ -76,11 +73,18 @@ const SideBar = ({ team }: { team: TEAM[] }) => {
 
       {/* bottom section */}
       <div>
-        <SideBarBottom
-          handleCreateNewFile={handleCreateNewFile}
-          fileName={fileName}
-          setFileName={setFileName}
-        />
+        {activeTeam && allFiles ? (
+          <SideBarBottom
+            handleCreateNewFile={handleCreateNewFile}
+            fileName={fileName}
+            setFileName={setFileName}
+            allFiles={allFiles!}
+          />
+        ) : (
+          <div className="flex justify-center mt-3">
+            <SideBarBottomShimmer />
+          </div>
+        )}
       </div>
     </div>
   );

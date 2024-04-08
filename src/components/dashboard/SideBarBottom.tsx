@@ -1,7 +1,8 @@
 import { ChevronDown, Flag, Github, Trash } from "lucide-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "../ui/button";
+import { FILE } from "@/lib/types";
 
 import {
   Dialog,
@@ -39,12 +40,14 @@ interface PROPS {
   handleCreateNewFile: any;
   fileName: string;
   setFileName: React.Dispatch<React.SetStateAction<string>>;
+  allFiles: FILE[];
 }
 
 const SideBarBottom = ({
   handleCreateNewFile,
   fileName,
   setFileName,
+  allFiles,
 }: PROPS) => {
   return (
     <div>
@@ -105,14 +108,15 @@ const SideBarBottom = ({
       <div className="w-full relative h-4 bg-zinc-600 rounded-full mt-5">
         <div
           className="absolute h-4 bg-blue-600 rounded-full"
-          style={{ width: `50%` }}
+          style={{ width: `${(allFiles && allFiles.length * 100) / 5}%` }}
         ></div>
       </div>
 
       {/* number of fiels */}
       <div className="mt-6 text-xs">
         <p>
-          <strong>1</strong> out of <strong>5</strong> files used.
+          <strong>{allFiles && allFiles.length}</strong> out of{" "}
+          <strong>5</strong> files used.
         </p>
         <p className="mt-1">
           <span className="underline cursor-pointer">Upgrade</span> your plan
