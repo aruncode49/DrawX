@@ -1,12 +1,11 @@
 "use client";
 
-import {
-  LogoutLink,
-  useKindeBrowserClient,
-} from "@kinde-oss/kinde-auth-nextjs";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import React, { useEffect } from "react";
-import { Button } from "@/components/ui/button";
+
 import axios from "axios";
+import Header from "@/components/dashboard/Header";
+import FileList from "@/components/dashboard/FileList";
 
 const DashboardPage = () => {
   const { user } = useKindeBrowserClient();
@@ -14,15 +13,11 @@ const DashboardPage = () => {
   async function createUser() {
     try {
       if (user) {
-        const res = await axios.post("/api/user", {
+        await axios.post("/api/user", {
           name: user.given_name,
           email: user.email,
           image: user.picture,
         });
-
-        if (res.data.success) {
-          console.log(res.data);
-        }
       }
     } catch (error: any) {
       console.log(error.message);
@@ -34,8 +29,11 @@ const DashboardPage = () => {
   }, [user]);
 
   return (
-    <div>
-      <h1>Hello Dashboard</h1>
+    <div className="bg-black/90 h-full">
+      <div className="pt-8 pl-[70px] pr-12">
+        <Header />
+        <FileList />
+      </div>
     </div>
   );
 };

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import SideBar from "@/components/dashboard/SideBar";
 import { TEAM } from "@/lib/types";
+import FileListProvider from "@/context/FileListContext";
 
 const DashboardLayout = ({
   children,
@@ -36,12 +37,14 @@ const DashboardLayout = ({
   }, [user]);
 
   return (
-    <div className="bg-black/90 min-h-screen text-white flex">
-      <div className="w-[280px] border-r border-r-zinc-700 h-screen fixed">
-        <SideBar team={team!} />
+    <FileListProvider>
+      <div className="h-full min text-white flex">
+        <div className="w-[280px] border-r border-r-zinc-700 h-full fixed">
+          <SideBar team={team!} />
+        </div>
+        <div className="ml-[280px] min-h-screen w-full">{children}</div>
       </div>
-      <div className="ml-[280px]">{children}</div>
-    </div>
+    </FileListProvider>
   );
 };
 

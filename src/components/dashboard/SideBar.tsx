@@ -6,6 +6,7 @@ import { TEAM, FILE } from "@/lib/types";
 import axios from "axios";
 import { toast } from "sonner";
 import SideBarBottomShimmer from "../skeleton/SideBarBottomShimmer";
+import { useFileContext } from "@/context/FileListContext";
 
 const SideBar = ({ team }: { team: TEAM[] }) => {
   const { user } = useKindeBrowserClient();
@@ -14,6 +15,8 @@ const SideBar = ({ team }: { team: TEAM[] }) => {
   const [activeTeam, setActiveTeam] = useState<TEAM>(testactiveTeam!);
 
   const [allFiles, setAllFiles] = useState<FILE[]>();
+
+  const { setFiles } = useFileContext();
 
   let toastId: string | number;
 
@@ -54,8 +57,10 @@ const SideBar = ({ team }: { team: TEAM[] }) => {
       if (res?.data?.success) {
         setAllFiles(res?.data?.allFiles);
         console.log(res?.data?.allFiles);
+        setFiles(res?.data?.allFiles);
       } else {
         setAllFiles(res?.data?.allFiles);
+        setFiles(res?.data?.allFiles);
       }
     } catch (error: any) {
       console.log(error.message);
@@ -71,7 +76,7 @@ const SideBar = ({ team }: { team: TEAM[] }) => {
   }, [team && team.length]);
 
   return (
-    <div className="px-6 pt-10 flex flex-col h-full pb-8">
+    <div className="px-6 pt-10 flex flex-col h-full pb-8 bg-black/90">
       {/* team drop down */}
       <div className="flex-1">
         <SideBarDropdown
