@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     const allFiles = await File.find({
       teamId,
       createdBy,
-    });
+    }).sort({ createdAt: -1 });
 
     if (allFiles && allFiles.length > 0) {
       return NextResponse.json({

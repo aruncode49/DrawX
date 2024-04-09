@@ -35,8 +35,11 @@ const SideBar = ({ team }: { team: TEAM[] }) => {
       if (res?.data?.success) {
         toast.success(res?.data?.msg);
         setAllFiles(res?.data?.allFiles);
+        setFiles(res?.data?.allFiles);
+        setFileName("");
       } else {
         toast.error(res?.data?.msg);
+        setFileName("");
       }
     } catch (error: any) {
       console.log(error.message);
@@ -56,7 +59,6 @@ const SideBar = ({ team }: { team: TEAM[] }) => {
 
       if (res?.data?.success) {
         setAllFiles(res?.data?.allFiles);
-        console.log(res?.data?.allFiles);
         setFiles(res?.data?.allFiles);
       } else {
         setAllFiles(res?.data?.allFiles);

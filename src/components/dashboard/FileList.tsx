@@ -3,15 +3,18 @@ import { useFileContext } from "@/context/FileListContext";
 import moment from "moment";
 import Image from "next/image";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import { Ellipsis } from "lucide-react";
+import { Archive, Ellipsis } from "lucide-react";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const FileList = () => {
   const { files } = useFileContext();
   const { user } = useKindeBrowserClient();
 
-  if (files && files.length) {
-    console.log(files);
-  }
   return files && files.length ? (
     <div className="overflow-x-auto mt-10">
       <table className="min-w-full divide-y divide-zinc-700 text-white text-sm">
@@ -54,7 +57,17 @@ const FileList = () => {
                 />
               </td>
               <td className="whitespace-nowrap px-4 py-2 text-xs text-zinc-200">
-                <Ellipsis />
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="outline-none rounded-full p-2">
+                    <Ellipsis />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className=" text-sm bg-zinc-800 text-white border-zinc-700 ">
+                    <span className="flex justify-center items-center gap-3 p-1 rounded cursor-pointer hover:bg-zinc-700">
+                      <Archive size={16} />
+                      Archive
+                    </span>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </td>
             </tr>
           ))}

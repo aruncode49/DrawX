@@ -1,4 +1,4 @@
-import { ChevronDown, Flag, Github, Trash } from "lucide-react";
+import { Archive, ChevronDown, Flag, Github } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
@@ -31,7 +31,7 @@ const links = [
   {
     id: 3,
     name: "Archive",
-    icon: <Trash size={16} />,
+    icon: <Archive size={16} />,
     path: "",
   },
 ];
