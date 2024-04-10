@@ -23,11 +23,14 @@ const links = [
   },
 ];
 
-const Header = () => {
-  const [activeId, setActiveId] = useState<number>(2);
+interface PROPS {
+  activeId: number;
+  setActiveId: React.Dispatch<React.SetStateAction<number>>;
+}
 
+const Header = ({ activeId, setActiveId }: PROPS) => {
   return (
-    <div className="flex items-center justify-between px-5 py-2 border-b border-zinc-700">
+    <div className="h-[52px] flex items-center justify-between px-5 py-2 border-b border-zinc-700">
       {/* logo and file name */}
       <div className="text-sm flex items-center gap-2">
         <Image src={"/logo.png"} width={35} height={35} alt="logo" />
