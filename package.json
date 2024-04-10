@@ -9,6 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@editorjs/checklist": "^1.6.0",
+    "@editorjs/code": "^2.9.0",
+    "@editorjs/editorjs": "^2.29.1",
+    "@editorjs/header": "^2.8.1",
+    "@editorjs/list": "^1.9.0",
+    "@editorjs/paragraph": "^2.11.4",
+    "@editorjs/table": "^2.3.0",
     "@kinde-oss/kinde-auth-nextjs": "^2.2.0",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
@@ -33,6 +40,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "editorjs-text-color-plugin": "^2.0.4",
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
