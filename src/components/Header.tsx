@@ -3,6 +3,7 @@
 import { LoginLink } from "@kinde-oss/kinde-auth-nextjs";
 import { MoveRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -68,13 +69,13 @@ const Header = () => {
                 <LoginLink>Login</LoginLink>
               </div>
 
-              <a
+              <Link
                 className="hidden rounded-md bg-white text-black px-6 py-2.5 text-sm font-medium transition  sm:block hover:bg-gray-300 md:flex items-center justify-center gap-1"
-                href="#"
+                href="/workspace/id"
               >
                 Try Eraser
                 <MoveRight width={16} />
-              </a>
+              </Link>
             </div>
 
             <button className="block rounded bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 md:hidden">

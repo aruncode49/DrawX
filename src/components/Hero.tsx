@@ -1,4 +1,5 @@
 import { ChevronRight, MoveRight } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
 const Hero = () => {
@@ -27,13 +28,13 @@ const Hero = () => {
           </p>
 
           <div className="mt-8 w-fit mx-auto">
-            <a
+            <Link
               className="rounded-md bg-white text-black px-6 py-2.5 text-sm font-medium transition  hover:bg-gray-300 flex items-center justify-center gap-1"
-              href="#"
+              href="/workspace/id"
             >
               Try Eraser
               <MoveRight width={16} />
-            </a>
+            </Link>
           </div>
         </div>
       </div>
