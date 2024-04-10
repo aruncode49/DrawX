@@ -30,7 +30,7 @@ const Hero = () => {
           <div className="mt-8 w-fit mx-auto">
             <Link
               className="rounded-md bg-white text-black px-6 py-2.5 text-sm font-medium transition  hover:bg-gray-300 flex items-center justify-center gap-1"
-              href="/workspace/id"
+              href="/workspace/fileId"
             >
               Try Eraser
               <MoveRight width={16} />

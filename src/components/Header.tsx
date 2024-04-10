@@ -71,7 +71,7 @@ const Header = () => {
 
               <Link
                 className="hidden rounded-md bg-white text-black px-6 py-2.5 text-sm font-medium transition  sm:block hover:bg-gray-300 md:flex items-center justify-center gap-1"
-                href="/workspace/id"
+                href="/workspace/fileId"
               >
                 Try Eraser
                 <MoveRight width={16} />
