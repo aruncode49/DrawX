@@ -4,7 +4,7 @@ import moment from "moment";
 import Image from "next/image";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { Archive, Ellipsis } from "lucide-react";
-
+import { useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,6 +14,7 @@ import {
 const FileList = () => {
   const { files } = useFileContext();
   const { user } = useKindeBrowserClient();
+  const router = useRouter();
 
   return files && files.length ? (
     <div className="overflow-x-auto mt-10">
@@ -37,7 +38,11 @@ const FileList = () => {
 
         <tbody className="divide-y divide-zinc-700 text-white">
           {files?.map((file) => (
-            <tr key={file._id}>
+            <tr
+              onClick={() => router.push(`/workspace/${file._id}`)}
+              key={file._id}
+              className="cursor-pointer"
+            >
               <td className="whitespace-nowrap px-4 py-2 font-medium ">
                 {file.fileName}
               </td>
@@ -58,7 +63,7 @@ const FileList = () => {
               </td>
               <td className="whitespace-nowrap px-4 py-2 text-xs text-zinc-200">
                 <DropdownMenu>
-                  <DropdownMenuTrigger className="outline-none rounded-full p-2">
+                  <DropdownMenuTrigger className="outline-none rounded-full p-2 hover:bg-zinc-800">
                     <Ellipsis />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className=" text-sm bg-zinc-800 text-white border-zinc-700 ">
