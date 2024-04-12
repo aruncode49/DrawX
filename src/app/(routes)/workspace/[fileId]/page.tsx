@@ -2,14 +2,43 @@
 
 import DocumentEditor from "@/components/workspace/DocumentEditor";
 import Header from "@/components/workspace/Header";
-import React, { useState } from "react";
+import { FILE } from "@/lib/types";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
-const Workspace = () => {
+const Workspace = ({ params }: any) => {
   const [activeId, setActiveId] = useState<number>(2);
+  const [triggerForSave, setTriggerForSave] = useState<boolean>(false);
+  const [fileData, setFileData] = useState<FILE | any>();
+
+  const { fileId }: any = params;
+
+  async function getFileData() {
+    try {
+      const res = await axios.post("/api/file/get", { fileId });
+      if (res?.data?.success) {
+        console.log(res?.data);
+        setFileData(res?.data?.file);
+      } else {
+        console.log(res?.data);
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }
+
+  useEffect(() => {
+    fileId && getFileData();
+  }, [fileId]);
 
   return (
     <div className="min-h-screen">
-      <Header activeId={activeId} setActiveId={setActiveId} />
+      <Header
+        activeId={activeId}
+        setActiveId={setActiveId}
+        setTriggerForSave={setTriggerForSave}
+        fileData={fileData}
+      />
 
       {/* Workspace layout */}
       <div className="grid grid-cols-12">
@@ -19,7 +48,11 @@ const Workspace = () => {
             activeId == 1 && "col-span-12"
           }  ${activeId == 2 && "col-span-5"} ${activeId == 3 && "hidden"}`}
         >
-          <DocumentEditor />
+          <DocumentEditor
+            triggerForSave={triggerForSave}
+            fileId={fileId}
+            fileData={fileData}
+          />
         </div>
         {/* Canvas */}
         <div

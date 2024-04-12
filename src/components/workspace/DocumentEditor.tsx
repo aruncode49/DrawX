@@ -13,8 +13,9 @@ import Checklist from "@editorjs/checklist";
 import Table from "@editorjs/table";
 // @ts-ignore
 import CodeTool from "@editorjs/code";
-// @ts-ignore
-import Paragraph from "@editorjs/paragraph";
+import axios from "axios";
+import { toast } from "sonner";
+import { FILE } from "@/lib/types";
 
 const rawData = {
   time: 1550476186479,
@@ -38,9 +39,16 @@ const rawData = {
   version: "2.8.1",
 };
 
-const DocumentEditor = () => {
+interface PROPS {
+  triggerForSave: boolean;
+  fileId: string;
+  fileData: FILE;
+}
+
+const DocumentEditor = ({ triggerForSave, fileId, fileData }: PROPS) => {
   const ref = useRef<EditorJS>();
-  const [document, setDocument] = useState(rawData);
+
+  console.log(fileData);
 
   const initEditor = () => {
     const editor = new EditorJS({
@@ -71,25 +79,60 @@ const DocumentEditor = () => {
           },
         },
         code: CodeTool,
-        paragraph: {
-          class: Paragraph,
-          inlineToolbar: true,
-        },
       },
 
       holder: "editorjs",
-      data: document,
+      data: fileData?.document ? JSON.parse(fileData.document) : rawData,
     });
     ref.current = editor;
   };
 
+  let toastId: string | number;
+
+  // save doc in db
+  async function saveDoc(document: string) {
+    try {
+      toastId = toast.loading("File Saving!");
+      const res = await axios.patch("/api/file/updateDoc", {
+        fileId,
+        document,
+      });
+
+      if (res?.data?.success) {
+        toast.success(res?.data?.msg);
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    } finally {
+      toast.dismiss(toastId);
+    }
+  }
+
+  // handle save document function
+  function handleSaveDocument() {
+    if (ref?.current) {
+      ref?.current
+        ?.save()
+        .then((outputData) => {
+          saveDoc(JSON.stringify(outputData));
+        })
+        .catch((error) => {
+          console.log("Saving failed: ", error);
+        });
+    }
+  }
+
   useEffect(() => {
-    initEditor();
-  }, []);
+    triggerForSave && handleSaveDocument();
+  }, [triggerForSave]);
+
+  useEffect(() => {
+    fileData && initEditor();
+  }, [fileData]);
 
   return (
     <div className=" px-8 pt-8">
-      <div className="font-semibold" id="editorjs"></div>
+      <div className="" id="editorjs"></div>
     </div>
   );
 };

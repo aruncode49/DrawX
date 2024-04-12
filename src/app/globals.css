@@ -13,13 +13,13 @@ h3.ce-header {
   @apply text-xl font-semibold;
 }
 h4.ce-header {
-  @apply text-lg font-semibold;
+  @apply text-lg;
 }
 h5.ce-header {
-  @apply text-base font-semibold;
+  @apply text-base;
 }
 h6.ce-header {
-  @apply text-sm font-semibold;
+  @apply text-sm;
 }
 
 @layer base {

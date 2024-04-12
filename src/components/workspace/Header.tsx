@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
-import { Link } from "lucide-react";
+import { Save, Share2 } from "lucide-react";
+import { FILE } from "@/lib/types";
 
 const links = [
   {
@@ -26,15 +27,22 @@ const links = [
 interface PROPS {
   activeId: number;
   setActiveId: React.Dispatch<React.SetStateAction<number>>;
+  setTriggerForSave: React.Dispatch<React.SetStateAction<boolean>>;
+  fileData: FILE;
 }
 
-const Header = ({ activeId, setActiveId }: PROPS) => {
+const Header = ({
+  activeId,
+  setActiveId,
+  setTriggerForSave,
+  fileData,
+}: PROPS) => {
   return (
     <div className="h-[52px] bg-black/90 text-white flex items-center justify-between px-5 py-2 border-b border-zinc-700">
       {/* logo and file name */}
       <div className="text-sm flex items-center gap-2">
         <Image src={"/logo.png"} width={35} height={35} alt="logo" />
-        <h2>Untitled File</h2>
+        <h2>{fileData ? fileData.fileName : "Untitled File"}</h2>
       </div>
 
       {/* selector (doc, both, canvas) */}
@@ -55,10 +63,17 @@ const Header = ({ activeId, setActiveId }: PROPS) => {
       </div>
 
       {/* share or save button */}
-      <div>
-        <Button className="bg-blue-600 hover:bg-blue-700 h-7 w-[88px] text-sm flex items-center px-1 gap-2">
+      <div className="flex items-center gap-2">
+        <Button
+          onClick={() => setTriggerForSave((prev) => !prev)}
+          className="bg-blue-600 hover:bg-blue-700 h-7 w-[88px] text-sm flex items-center px-1 gap-2 rounded border border-zinc-500"
+        >
+          Save
+          <Save size={13} />
+        </Button>
+        <Button className="bg-lime-600 hover:bg-lime-700  border border-zinc-600 h-7 w-[88px] text-sm flex items-center px-1 gap-2 rounded">
           Share
-          <Link size={13} />
+          <Share2 size={13} />
         </Button>
       </div>
     </div>

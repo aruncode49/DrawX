@@ -5,9 +5,25 @@ import { connectDB } from "@/lib/connectDB";
 export async function POST(req: NextRequest) {
   try {
     await connectDB();
-    const { teamId, createdBy } = await req.json();
+    const { fileId, teamId, createdBy } = await req.json();
 
-    // create new file
+    // get single file
+    if (fileId) {
+      const file = await File.findById(fileId);
+      if (file) {
+        return NextResponse.json({
+          msg: "File fetched!",
+          success: true,
+          file,
+        });
+      } else {
+        return NextResponse.json({
+          msg: "File not found!",
+          success: false,
+        });
+      }
+    }
+
     const allFiles = await File.find({
       teamId,
       createdBy,
