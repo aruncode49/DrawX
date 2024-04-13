@@ -1,3 +1,4 @@
+import { MainMenu, WelcomeScreen } from "@excalidraw/excalidraw";
 import dynamic from "next/dynamic";
 const Excalidraw = dynamic(
   async () => (await import("@excalidraw/excalidraw")).Excalidraw,
@@ -21,7 +22,18 @@ export default function Canvas() {
             toggleTheme: false,
           },
         }}
-      />
+      >
+        <MainMenu>
+          <MainMenu.DefaultItems.SaveAsImage />
+          <MainMenu.DefaultItems.ClearCanvas />
+          <MainMenu.DefaultItems.ChangeCanvasBackground />
+        </MainMenu>
+
+        <WelcomeScreen>
+          <WelcomeScreen.Hints.MenuHint />
+          <WelcomeScreen.Hints.ToolbarHint />
+        </WelcomeScreen>
+      </Excalidraw>
     </div>
   );
 }

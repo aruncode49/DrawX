@@ -18,7 +18,7 @@ const links = [
   {
     id: 2,
     name: "Both",
-    class: "border-l border-r border-zinc-600",
+    class: "border-l border-r border-zinc-300",
   },
   {
     id: 3,
@@ -54,7 +54,7 @@ const Header = ({
 
       {/* selector (doc, both, canvas) */}
       <div>
-        <ul className="flex items-center text-sm border border-zinc-400 rounded">
+        <ul className="flex items-center text-sm border border-zinc-300 rounded">
           {links.map((link) => (
             <li
               key={link.id}
