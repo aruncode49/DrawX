@@ -1,17 +1,36 @@
 "use client";
 
 import dynamic from "next/dynamic";
+
 const DocumentEditor = dynamic(
   async () => await import("@/components/workspace/DocumentEditor"),
   {
     ssr: false,
+    loading: () => (
+      <div className="h-full w-full flex justify-center items-center">
+        <LoaderCircle className="animate-spin" color="gray" size={40} />
+      </div>
+    ),
   }
 );
+
+const Canvas = dynamic(
+  async () => await import("@/components/workspace/Canvas"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-full w-full flex justify-center items-center">
+        <LoaderCircle className="animate-spin" color="gray" size={40} />
+      </div>
+    ),
+  }
+);
+
 import Header from "@/components/workspace/Header";
 import { FILE } from "@/lib/types";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Canvas from "@/components/workspace/Canvas";
+import { LoaderCircle } from "lucide-react";
 
 const Workspace = ({ params }: any) => {
   const [activeId, setActiveId] = useState<number>(2);
