@@ -22,6 +22,10 @@ h6.ce-header {
   @apply text-sm;
 }
 
+.mobile-misc-tools-container {
+  margin-right: 8px;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
