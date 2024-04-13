@@ -21,6 +21,16 @@ const Workspace = ({ params }: any) => {
         setFileData(res?.data?.file);
       } else {
         console.log(res?.data);
+        setFileData({
+          teamId: "",
+          _id: "string",
+          createdBy: "string",
+          fileName: "Untitled File",
+          archive: false,
+          document: "",
+          whiteboard: "string",
+          createdAt: "",
+        });
       }
     } catch (error: any) {
       console.log(error.message);

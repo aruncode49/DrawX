@@ -5,6 +5,9 @@ import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Save, Share2 } from "lucide-react";
 import { FILE } from "@/lib/types";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { toast } from "sonner";
+import Link from "next/link";
 
 const links = [
   {
@@ -37,13 +40,15 @@ const Header = ({
   setTriggerForSave,
   fileData,
 }: PROPS) => {
+  const { user } = useKindeBrowserClient();
+
   return (
     <div className="h-[52px] bg-black/90 text-white flex items-center justify-between px-5 py-2 border-b border-zinc-700">
       {/* logo and file name */}
-      <div className="text-sm flex items-center gap-2">
+      <Link href={"/dashboard"} className="text-sm flex items-center gap-2">
         <Image src={"/logo.png"} width={35} height={35} alt="logo" />
         <h2>{fileData ? fileData.fileName : "Untitled File"}</h2>
-      </div>
+      </Link>
 
       {/* selector (doc, both, canvas) */}
       <div>
@@ -65,15 +70,14 @@ const Header = ({
       {/* share or save button */}
       <div className="flex items-center gap-2">
         <Button
-          onClick={() => setTriggerForSave((prev) => !prev)}
+          onClick={() => {
+            if (!user) return toast.error("Please login to save the document!");
+            setTriggerForSave((prev) => !prev);
+          }}
           className="bg-blue-600 hover:bg-blue-700 h-7 w-[88px] text-sm flex items-center px-1 gap-2 rounded border border-zinc-500"
         >
           Save
           <Save size={13} />
-        </Button>
-        <Button className="bg-lime-600 hover:bg-lime-700  border border-zinc-600 h-7 w-[88px] text-sm flex items-center px-1 gap-2 rounded">
-          Share
-          <Share2 size={13} />
         </Button>
       </div>
     </div>
