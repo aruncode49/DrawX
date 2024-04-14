@@ -96,7 +96,11 @@ const Workspace = ({ params }: any) => {
             activeId == 3 && "col-span-12"
           }  ${activeId == 2 && "col-span-7"}`}
         >
-          <Canvas />
+          <Canvas
+            triggerForSave={triggerForSave}
+            fileId={fileId}
+            fileData={fileData}
+          />
         </div>
       </div>
     </div>

@@ -1,19 +1,58 @@
-import { MainMenu, WelcomeScreen } from "@excalidraw/excalidraw";
-import dynamic from "next/dynamic";
+"use client";
 
-const Excalidraw = dynamic(
-  async () => (await import("@excalidraw/excalidraw")).Excalidraw,
-  {
-    ssr: false,
+import { FILE } from "@/lib/types";
+import { MainMenu, WelcomeScreen } from "@excalidraw/excalidraw";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+
+import { Excalidraw } from "@excalidraw/excalidraw";
+
+interface PROPS {
+  triggerForSave: boolean;
+  fileId: string;
+  fileData: FILE;
+}
+
+export default function Canvas({ triggerForSave, fileId, fileData }: PROPS) {
+  const [canvasData, setCanvasData] = useState<any>(
+    fileData?.whiteboard ? JSON.parse(fileData?.whiteboard) : []
+  );
+
+  let toastId: string | number;
+
+  // handle save document function
+  async function handleSaveCanvas() {
+    try {
+      toastId = toast.loading("File Saving...");
+      const res = await axios.patch("/api/file/updateCanvas", {
+        fileId,
+        whiteboard: JSON.stringify(canvasData),
+      });
+
+      if (res?.data?.success) {
+        toast.success(res?.data?.msg);
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    } finally {
+      toast.dismiss(toastId);
+    }
   }
-);
-export default function Canvas() {
+
+  useEffect(() => {
+    triggerForSave && handleSaveCanvas();
+  }, [triggerForSave]);
+
   return (
     <div className="h-full">
       <Excalidraw
         theme="light"
+        initialData={{
+          elements: canvasData,
+        }}
         onChange={(excalidrawElements, appState, files) =>
-          console.log(excalidrawElements)
+          setCanvasData(excalidrawElements)
         }
         UIOptions={{
           canvasActions: {

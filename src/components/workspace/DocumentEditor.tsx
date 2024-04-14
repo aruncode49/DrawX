@@ -14,7 +14,6 @@ import Table from "@editorjs/table";
 // @ts-ignore
 import CodeTool from "@editorjs/code";
 import axios from "axios";
-import { toast } from "sonner";
 import { FILE } from "@/lib/types";
 
 const rawData = {
@@ -47,8 +46,6 @@ interface PROPS {
 
 const DocumentEditor = ({ triggerForSave, fileId, fileData }: PROPS) => {
   const ref = useRef<EditorJS>();
-
-  console.log(fileData);
 
   const initEditor = () => {
     const editor = new EditorJS({
@@ -87,24 +84,16 @@ const DocumentEditor = ({ triggerForSave, fileId, fileData }: PROPS) => {
     ref.current = editor;
   };
 
-  let toastId: string | number;
-
   // save doc in db
   async function saveDoc(document: string) {
     try {
-      toastId = toast.loading("File Saving!");
-      const res = await axios.patch("/api/file/updateDoc", {
+      await axios.patch("/api/file/updateDoc", {
         fileId,
         document,
       });
-
-      if (res?.data?.success) {
-        toast.success(res?.data?.msg);
-      }
     } catch (error: any) {
       console.log(error.message);
     } finally {
-      toast.dismiss(toastId);
     }
   }
 
