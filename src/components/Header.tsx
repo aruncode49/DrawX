@@ -1,11 +1,22 @@
 "use client";
 
-import { LoginLink } from "@kinde-oss/kinde-auth-nextjs";
+import { LoginLink, useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { MoveRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const Header = () => {
+  const { user, error } = useKindeBrowserClient();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (error) {
+      console.log(error);
+    } else if (user) router.push("/dashboard");
+  }, [user]);
+
   return (
     <header className="bg-black/90">
       <div className="mx-auto flex h-24 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">

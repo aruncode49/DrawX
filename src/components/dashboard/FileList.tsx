@@ -3,7 +3,7 @@ import { useFileContext } from "@/context/FileListContext";
 import moment from "moment";
 import Image from "next/image";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import { Archive, Ellipsis } from "lucide-react";
+import { Archive, Ellipsis, LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import {
   DropdownMenu,
@@ -79,8 +79,12 @@ const FileList = () => {
         </tbody>
       </table>
     </div>
-  ) : (
+  ) : files?.length == 0 ? (
     <p className="mt-32 text-center text-zinc-500">Your list is empty</p>
+  ) : (
+    <div className="mt-32 flex justify-center">
+      <LoaderCircle className="animate-spin" color="gray" size={40} />
+    </div>
   );
 };
 

@@ -1,12 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button } from "../ui/button";
-import { Save, Share2 } from "lucide-react";
+import { Save } from "lucide-react";
 import { FILE } from "@/lib/types";
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import { toast } from "sonner";
+import { LoginLink, useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import Link from "next/link";
 
 const links = [
@@ -69,18 +68,17 @@ const Header = ({
         </ul>
       </div>
 
-      {/* share or save button */}
+      {/* login or save button */}
       <div className="flex items-center gap-3">
-        <Button
-          onClick={() => {
-            if (!user) return toast.error("Please login to save the document!");
-            setTriggerForSave((prev) => !prev);
-          }}
-          className="bg-blue-600 hover:bg-blue-700 h-8 w-[80px]  text-sm flex items-center px-1 gap-2 rounded "
-        >
-          Save
-          <Save size={13} />
-        </Button>
+        {user && (
+          <Button
+            onClick={() => setTriggerForSave((prev) => !prev)}
+            className="bg-blue-600 hover:bg-blue-700 h-8 w-[80px]  text-sm flex items-center px-1 gap-2 rounded "
+          >
+            Save
+            <Save size={13} />
+          </Button>
+        )}
 
         {user && (
           <Image
@@ -90,6 +88,12 @@ const Header = ({
             height={32}
             className="rounded-full border border-zinc-600"
           />
+        )}
+
+        {!user && (
+          <LoginLink className="bg-blue-600 hover:bg-blue-700 h-8 px-4  text-sm flex text-white items-center gap-2 rounded ">
+            Login
+          </LoginLink>
         )}
       </div>
     </div>
