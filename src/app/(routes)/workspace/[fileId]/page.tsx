@@ -18,6 +18,11 @@ const Canvas = dynamic(
   async () => await import("@/components/workspace/Canvas"),
   {
     ssr: false,
+    loading: () => (
+      <div className="h-full w-full flex justify-center items-center">
+        <LoaderCircle className="animate-spin" color="gray" size={40} />
+      </div>
+    ),
   }
 );
 

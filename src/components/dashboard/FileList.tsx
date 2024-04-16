@@ -20,27 +20,51 @@ import axios from "axios";
 import { toast } from "sonner";
 
 const FileList = () => {
-  const { files } = useFileContext();
+  const { files, setFiles } = useFileContext();
   const { user } = useKindeBrowserClient();
   const router = useRouter();
 
-  async function deleteFile(id: string) {
+  let toastId: string | number;
+
+  async function getAllFiles(teamId: string, createdBy: string) {
     try {
-      const res = await axios.delete(`/api/file/delete?id=${id}`);
+      const res = await axios.post("/api/file/get", {
+        teamId,
+        createdBy,
+      });
       if (res?.data?.success) {
-        toast.success(res?.data?.msg);
+        setFiles(res?.data?.allFiles);
+      } else {
+        setFiles(res?.data?.allFiles);
       }
     } catch (error: any) {
       console.log(error.message);
     }
   }
 
+  async function deleteFile(id: string, teamId: string, createdBy: string) {
+    try {
+      toastId = toast.loading("File deleting...");
+      const res = await axios.delete(`/api/file/delete?id=${id}`);
+      if (res?.data?.success) {
+        getAllFiles(teamId, createdBy);
+        toast.success(res?.data?.msg);
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    } finally {
+      toast.dismiss(toastId);
+    }
+  }
+
   function handleDeleteFile(
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    id: string
+    id: string,
+    teamId: string,
+    createdBy: string
   ) {
     e.stopPropagation();
-    deleteFile(id);
+    deleteFile(id, teamId, createdBy);
     console.log("Delete files");
   }
 
@@ -116,7 +140,14 @@ const FileList = () => {
                       </AlertDialogCancel>
                       <AlertDialogAction
                         className="bg-red-500 hover:bg-red-600"
-                        onClick={(e) => handleDeleteFile(e, file._id)}
+                        onClick={(e) =>
+                          handleDeleteFile(
+                            e,
+                            file._id,
+                            file.teamId,
+                            file.createdBy
+                          )
+                        }
                       >
                         Delete
                       </AlertDialogAction>

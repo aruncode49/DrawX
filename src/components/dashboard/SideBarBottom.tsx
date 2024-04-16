@@ -15,6 +15,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { useFileContext } from "@/context/FileListContext";
 
 const links = [
   {
@@ -50,6 +51,8 @@ const SideBarBottom = ({
   setFileName,
   allFiles,
 }: PROPS) => {
+  const { files }: any = useFileContext();
+
   return (
     <div>
       {/* links */}
@@ -74,7 +77,7 @@ const SideBarBottom = ({
               <ChevronDown size={14} />
             </Button>
           </DialogTrigger>
-          {allFiles && allFiles?.length < 5 ? (
+          {files && files?.length < 5 ? (
             <DialogContent className="sm:max-w-md bg-zinc-900 border-zinc-600">
               <DialogHeader>
                 <DialogTitle className="text-white">
@@ -115,17 +118,17 @@ const SideBarBottom = ({
       <div className="w-full relative h-4 bg-zinc-600 rounded-full mt-5">
         <div
           className={`absolute h-4 bg-blue-600 rounded-full ${
-            allFiles && allFiles.length == 5 && "bg-red-600"
+            files && files.length == 5 && "bg-red-600"
           }`}
-          style={{ width: `${(allFiles && allFiles.length * 100) / 5}%` }}
+          style={{ width: `${(files && files.length * 100) / 5}%` }}
         ></div>
       </div>
 
       {/* number of fiels */}
       <div className="mt-6 text-xs">
         <p>
-          <strong>{allFiles && allFiles.length}</strong> out of{" "}
-          <strong>5</strong> files used.
+          <strong>{files && files.length}</strong> out of <strong>5</strong>{" "}
+          files used.
         </p>
         <p className="mt-1">
           <span className="underline cursor-pointer">Upgrade</span> your plan
