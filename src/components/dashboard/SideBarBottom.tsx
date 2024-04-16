@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
 import { FILE } from "@/lib/types";
+import PricingSection from "./PricingSection";
 
 import {
   Dialog,
@@ -73,34 +74,40 @@ const SideBarBottom = ({
               <ChevronDown size={14} />
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-md bg-zinc-900 border-zinc-600">
-            <DialogHeader>
-              <DialogTitle className="text-white">Create New File</DialogTitle>
-            </DialogHeader>
-            <div className="flex items-center space-x-2">
-              <div className="grid flex-1 gap-2">
-                <Input
-                  className="text-white bg-zinc-800 border-zinc-600 placeholder:text-zinc-400"
-                  placeholder="Enter file name"
-                  value={fileName}
-                  onChange={(e) => setFileName(e.target.value)}
-                />
+          {allFiles && allFiles?.length < 5 ? (
+            <DialogContent className="sm:max-w-md bg-zinc-900 border-zinc-600">
+              <DialogHeader>
+                <DialogTitle className="text-white">
+                  Create New File
+                </DialogTitle>
+              </DialogHeader>
+              <div className="flex items-center space-x-2">
+                <div className="grid flex-1 gap-2">
+                  <Input
+                    className="text-white bg-zinc-800 border-zinc-600 placeholder:text-zinc-400"
+                    placeholder="Enter file name"
+                    value={fileName}
+                    onChange={(e) => setFileName(e.target.value)}
+                  />
+                </div>
               </div>
-            </div>
-            <DialogFooter className="sm:justify-end">
-              <DialogClose asChild>
-                <Button
-                  className="bg-blue-600 hover:bg-blue-700 text-white"
-                  type="button"
-                  variant="secondary"
-                  disabled={fileName?.length < 3}
-                  onClick={() => handleCreateNewFile()}
-                >
-                  Create
-                </Button>
-              </DialogClose>
-            </DialogFooter>
-          </DialogContent>
+              <DialogFooter className="sm:justify-end">
+                <DialogClose asChild>
+                  <Button
+                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                    type="button"
+                    variant="secondary"
+                    disabled={fileName?.length < 3}
+                    onClick={() => handleCreateNewFile()}
+                  >
+                    Create
+                  </Button>
+                </DialogClose>
+              </DialogFooter>
+            </DialogContent>
+          ) : (
+            <PricingSection />
+          )}
         </Dialog>
       </div>
 

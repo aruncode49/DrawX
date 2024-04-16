@@ -22,6 +22,10 @@ h6.ce-header {
   @apply text-sm;
 }
 
+.lucide-x {
+  @apply text-white;
+}
+
 .mobile-misc-tools-container {
   margin-right: 8px;
 }
