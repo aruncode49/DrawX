@@ -18,11 +18,6 @@ const Canvas = dynamic(
   async () => await import("@/components/workspace/Canvas"),
   {
     ssr: false,
-    loading: () => (
-      <div className="h-full w-full flex justify-center items-center">
-        <LoaderCircle className="animate-spin" color="gray" size={40} />
-      </div>
-    ),
   }
 );
 
@@ -35,7 +30,7 @@ import { LoaderCircle } from "lucide-react";
 const Workspace = ({ params }: any) => {
   const [activeId, setActiveId] = useState<number>(2);
   const [triggerForSave, setTriggerForSave] = useState<boolean>(false);
-  const [fileData, setFileData] = useState<FILE | any>();
+  const [fileData, setFileData] = useState<FILE>();
 
   const { fileId }: any = params;
 
@@ -54,7 +49,7 @@ const Workspace = ({ params }: any) => {
           fileName: "Untitled File",
           archive: false,
           document: "",
-          whiteboard: "string",
+          whiteboard: "",
           createdAt: "",
         });
       }
@@ -73,7 +68,7 @@ const Workspace = ({ params }: any) => {
         activeId={activeId}
         setActiveId={setActiveId}
         setTriggerForSave={setTriggerForSave}
-        fileData={fileData}
+        fileData={fileData!}
       />
 
       {/* Workspace layout */}
@@ -87,7 +82,7 @@ const Workspace = ({ params }: any) => {
           <DocumentEditor
             triggerForSave={triggerForSave}
             fileId={fileId}
-            fileData={fileData}
+            fileData={fileData!}
           />
         </div>
         {/* Canvas */}
@@ -96,11 +91,17 @@ const Workspace = ({ params }: any) => {
             activeId == 3 && "col-span-12"
           }  ${activeId == 2 && "col-span-7"}`}
         >
-          <Canvas
-            triggerForSave={triggerForSave}
-            fileId={fileId}
-            fileData={fileData}
-          />
+          {fileData ? (
+            <Canvas
+              triggerForSave={triggerForSave}
+              fileId={fileId}
+              fileData={fileData!}
+            />
+          ) : (
+            <div className="h-full w-full flex justify-center items-center">
+              <LoaderCircle className="animate-spin" color="gray" size={40} />
+            </div>
+          )}
         </div>
       </div>
     </div>

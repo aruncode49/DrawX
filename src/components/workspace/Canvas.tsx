@@ -15,9 +15,9 @@ interface PROPS {
 }
 
 export default function Canvas({ triggerForSave, fileId, fileData }: PROPS) {
-  const [canvasData, setCanvasData] = useState<any>(
-    fileData?.whiteboard ? JSON.parse(fileData?.whiteboard) : []
-  );
+  const [canvasData, setCanvasData] = useState<any>([]);
+
+  console.log(canvasData);
 
   let toastId: string | number;
 
@@ -39,6 +39,12 @@ export default function Canvas({ triggerForSave, fileId, fileData }: PROPS) {
       toast.dismiss(toastId);
     }
   }
+
+  useEffect(() => {
+    if (fileData && fileData?.whiteboard) {
+      setCanvasData(JSON.parse(fileData?.whiteboard));
+    }
+  }, [fileData]);
 
   useEffect(() => {
     triggerForSave && handleSaveCanvas();
