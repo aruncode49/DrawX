@@ -17,8 +17,6 @@ interface PROPS {
 export default function Canvas({ triggerForSave, fileId, fileData }: PROPS) {
   const [canvasData, setCanvasData] = useState<any>([]);
 
-  console.log(canvasData);
-
   let toastId: string | number;
 
   // handle save document function

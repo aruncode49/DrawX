@@ -43,10 +43,8 @@ const Workspace = ({ params }: any) => {
     try {
       const res = await axios.post("/api/file/get", { fileId });
       if (res?.data?.success) {
-        console.log(res?.data);
         setFileData(res?.data?.file);
       } else {
-        console.log(res?.data);
         setFileData({
           teamId: "",
           _id: "string",
