@@ -3,18 +3,46 @@ import { useFileContext } from "@/context/FileListContext";
 import moment from "moment";
 import Image from "next/image";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import { Archive, Ellipsis, LoaderCircle } from "lucide-react";
+import { LoaderCircle, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import axios from "axios";
+import { toast } from "sonner";
 
 const FileList = () => {
   const { files } = useFileContext();
   const { user } = useKindeBrowserClient();
   const router = useRouter();
+
+  async function deleteFile(id: string) {
+    try {
+      const res = await axios.delete(`/api/file/delete?id=${id}`);
+      if (res?.data?.success) {
+        toast.success(res?.data?.msg);
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }
+
+  function handleDeleteFile(
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    id: string
+  ) {
+    e.stopPropagation();
+    deleteFile(id);
+    console.log("Delete files");
+  }
 
   return files && files.length ? (
     <div className="overflow-x-auto mt-10">
@@ -62,17 +90,39 @@ const FileList = () => {
                 />
               </td>
               <td className="whitespace-nowrap px-4 py-2 text-xs text-zinc-200">
-                <DropdownMenu>
-                  <DropdownMenuTrigger className="outline-none rounded-full p-2 hover:bg-zinc-800">
-                    <Ellipsis />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className=" text-sm bg-zinc-800 text-white border-zinc-700 ">
-                    <span className="flex justify-center items-center gap-3 p-1 rounded cursor-pointer hover:bg-zinc-700">
-                      <Archive size={16} />
-                      Archive
-                    </span>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <AlertDialog>
+                  <AlertDialogTrigger
+                    onClick={(e) => e.stopPropagation()}
+                    className="outline-none rounded-full p-3 "
+                  >
+                    <Trash color="red" size={18} />
+                  </AlertDialogTrigger>
+                  <AlertDialogContent className="bg-zinc-900 border-zinc-600 text-white">
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you absolutely sure?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription className="text-gray-300">
+                        This action cannot be undone. This will permanently
+                        delete your file and file data from our servers.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel
+                        className="text-black"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        Cancel
+                      </AlertDialogCancel>
+                      <AlertDialogAction
+                        className="bg-red-500 hover:bg-red-600"
+                        onClick={(e) => handleDeleteFile(e, file._id)}
+                      >
+                        Delete
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </td>
             </tr>
           ))}

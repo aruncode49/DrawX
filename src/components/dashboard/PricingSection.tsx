@@ -24,7 +24,7 @@ const PricingSection = () => {
                 <p className="mt-2 sm:mt-4">
                   <strong className="text-3xl font-bold text-white sm:text-4xl">
                     {" "}
-                    30${" "}
+                    4.99${" "}
                   </strong>
 
                   <span className="text-sm font-medium text-white">/month</span>
@@ -48,7 +48,10 @@ const PricingSection = () => {
                     />
                   </svg>
 
-                  <span className="text-white"> 20 users included </span>
+                  <span className="text-white">
+                    {" "}
+                    Everything included in free, plus
+                  </span>
                 </li>
 
                 <li className="flex items-center gap-1">
@@ -67,7 +70,7 @@ const PricingSection = () => {
                     />
                   </svg>
 
-                  <span className="text-white"> 5GB of storage </span>
+                  <span className="text-white"> Unlimited Team Files </span>
                 </li>
 
                 <li className="flex items-center gap-1">
@@ -86,7 +89,10 @@ const PricingSection = () => {
                     />
                   </svg>
 
-                  <span className="text-white"> Email support </span>
+                  <span className="text-white">
+                    {" "}
+                    Exclusive access to eraser content{" "}
+                  </span>
                 </li>
 
                 <li className="flex items-center gap-1">
@@ -124,7 +130,7 @@ const PricingSection = () => {
                     />
                   </svg>
 
-                  <span className="text-white"> Phone support </span>
+                  <span className="text-white"> Email support </span>
                 </li>
 
                 <li className="flex items-center gap-1">
@@ -158,14 +164,14 @@ const PricingSection = () => {
             <div className="rounded-2xl border border-gray-200 p-6 shadow-sm sm:px-8 lg:p-12">
               <div className="text-center">
                 <h2 className="text-lg font-medium text-white">
-                  Starter
+                  Free
                   <span className="sr-only">Plan</span>
                 </h2>
 
                 <p className="mt-2 sm:mt-4">
                   <strong className="text-3xl font-bold text-white sm:text-4xl">
                     {" "}
-                    20${" "}
+                    Free{" "}
                   </strong>
 
                   <span className="text-sm font-medium text-white">/month</span>
@@ -189,7 +195,7 @@ const PricingSection = () => {
                     />
                   </svg>
 
-                  <span className="text-white"> 10 users included </span>
+                  <span className="text-white"> 5 Team files </span>
                 </li>
 
                 <li className="flex items-center gap-1">
@@ -208,7 +214,10 @@ const PricingSection = () => {
                     />
                   </svg>
 
-                  <span className="text-white"> 2GB of storage </span>
+                  <span className="text-white">
+                    {" "}
+                    Limited Access to Eraser Services{" "}
+                  </span>
                 </li>
 
                 <li className="flex items-center gap-1">
@@ -227,7 +236,10 @@ const PricingSection = () => {
                     />
                   </svg>
 
-                  <span className="text-white"> Email support </span>
+                  <span className="text-white">
+                    {" "}
+                    Limited document features{" "}
+                  </span>
                 </li>
 
                 <li className="flex items-center gap-1">
@@ -246,7 +258,7 @@ const PricingSection = () => {
                     />
                   </svg>
 
-                  <span className="text-white"> Help center access </span>
+                  <span className="text-white"> Email Support </span>
                 </li>
               </ul>
 
