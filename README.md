@@ -20,7 +20,7 @@ DrawX is a dynamic document editor designed to streamline your workflow with the
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/aruncode49/DrawX
+    git clone https://github.com/aruncode49/DrawX.git
     ```
 
 2. **Install dependencies:**
