@@ -59,10 +59,10 @@ const SideBarDropdown = ({ team, activeTeam, setActiveTeam }: PROPS) => {
           <div className="flex items-center gap-1 cursor-pointer hover:bg-zinc-700 px-3 py-2 rounded-lg duration-200 w-fit">
             <Image
               className="mr-1"
-              src={"/logo.png"}
+              src={"/drawx.png"}
               alt="eraser-logo"
-              width={30}
-              height={30}
+              width={20}
+              height={20}
             />
             <span className="font-bold ">
               {activeTeam && activeTeam.teamName}

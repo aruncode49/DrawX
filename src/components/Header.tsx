@@ -20,8 +20,9 @@ const Header = () => {
   return (
     <header className="bg-black/90">
       <div className="mx-auto flex h-24 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
-        <a className="block text-teal-600" href="#">
-          <Image src={"/logo-black.svg"} width={100} height={50} alt="logo" />
+        <a className=" text-white flex items-center gap-3 font-bold" href="#">
+          <Image src={"/drawx.png"} width={25} height={20} alt="logo" />
+          DrawX
         </a>
 
         <div className="flex flex-1 items-center justify-end md:justify-between">
@@ -84,7 +85,7 @@ const Header = () => {
                 className="hidden rounded-md bg-white text-black px-6 py-2.5 text-sm font-medium transition  sm:block hover:bg-gray-300 md:flex items-center justify-center gap-1"
                 href="/workspace/try"
               >
-                Try Eraser
+                Try DrawX
                 <MoveRight width={16} />
               </Link>
             </div>

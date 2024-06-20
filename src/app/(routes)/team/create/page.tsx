@@ -40,13 +40,16 @@ const CreateTeam = () => {
 
   return (
     <div className="bg-black/90 min-h-screen p-4 text-white">
-      <Image
-        src={"/logo-black.svg"}
-        alt="eraser-logo"
-        width={140}
-        height={140}
-        className="mx-auto mt-5 md:mt-10 md:ml-10"
-      />
+      <div className="flex items-center gap-2 justify-center mt-5 md:mt-10">
+        <Image
+          src={"/drawx.png"}
+          alt="eraser-logo"
+          width={25}
+          height={30}
+          className=""
+        />
+        <p className="text-lg font-bold">DrawX</p>
+      </div>
 
       <div className="flex flex-col justify-center mt-10 items-center px-8">
         <div className="flex items-center justify-center text-xs md:text-sm bg-green-800/80 p-1 px-2 gap-1 text-green-400 rounded-md border border-green-600 mb-10">

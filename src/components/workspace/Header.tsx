@@ -45,7 +45,7 @@ const Header = ({
     <div className="h-16  text-black flex items-center justify-between px-5 py-2 border-b ">
       {/* logo and file name */}
       <Link href={"/dashboard"} className="text-sm flex items-center gap-2">
-        <Image src={"/logo.png"} width={40} height={40} alt="logo" />
+        <Image src={"/drawx.png"} width={20} height={20} alt="logo" />
         <h2 className="font-semibold text-[16px]">
           {fileData ? fileData.fileName : "Untitled File"}
         </h2>
